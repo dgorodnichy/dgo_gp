@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Incremental Lint Fixes by Github Actions 38o8 | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="How do you apply new lint rules to the legacy project with active development? Have you added standard gem recently, and now you are required to change a lot of files but could not apply them at once.
+I got the same problem, and we could not add a massive amount of the small changes because it would require regular rebasing while this PR is on review, or even some safe changes could cause annoying problems.">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/incremental-lint-fixes-by-github-actions-38o8/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/incremental-lint-fixes-by-github-actions-38o8/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Incremental Lint Fixes by Github Actions 38o8">
+  <meta property="og:description" content="How do you apply new lint rules to the legacy project with active development? Have you added standard gem recently, and now you are required to change a lot of files but could not apply them at once.
+I got the same problem, and we could not add a massive amount of the small changes because it would require regular rebasing while this PR is on review, or even some safe changes could cause annoying problems.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-26T16:46:43+03:00">
+    <meta property="article:modified_time" content="2024-04-26T16:46:43+03:00">
+
+  <meta itemprop="name" content="Incremental Lint Fixes by Github Actions 38o8">
+  <meta itemprop="description" content="How do you apply new lint rules to the legacy project with active development? Have you added standard gem recently, and now you are required to change a lot of files but could not apply them at once.
+I got the same problem, and we could not add a massive amount of the small changes because it would require regular rebasing while this PR is on review, or even some safe changes could cause annoying problems.">
+  <meta itemprop="datePublished" content="2024-04-26T16:46:43+03:00">
+  <meta itemprop="dateModified" content="2024-04-26T16:46:43+03:00">
+  <meta itemprop="wordCount" content="685"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Incremental Lint Fixes by Github Actions 38o8">
+<meta name="twitter:description" content="How do you apply new lint rules to the legacy project with active development? Have you added standard gem recently, and now you are required to change a lot of files but could not apply them at once.
+I got the same problem, and we could not add a massive amount of the small changes because it would require regular rebasing while this PR is on review, or even some safe changes could cause annoying problems.">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Incremental Lint Fixes by Github Actions 38o8</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2024-04-26T16:46:43+03:00">April 26, 2024</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>How do you apply new lint rules to the legacy project with active development? Have you added <code>standard</code> gem recently, and now you are required to change a lot of files but could not apply them at once.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rriw7035iyk4wwedexq2.png" alt="Auto-corrected Rubocop rules"></p>
+<p>I got the same problem, and we could not add a massive amount of the small changes because it would require regular rebasing while this PR is on review, or even some safe changes could cause annoying problems.</p>
+<h3 id="most-common-solution">Most common solution</h3>
+<p>Ask developers to add cosmetic changes for all changed files in the PR in separate commits. Which adds some problems for Code Reviewer in finding business logic changes.</p>
+<p>PRs Authors and Code Reviewers without big enthusiasm will follow this.</p>
+<p>So, I decided to delegate this annoying problem to the machine!</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9429i3j8xv4y8ggyo3vo.jpeg" alt="Terminator"></p>
+<blockquote>
+<p><em>Photo by <a href="https://unsplash.com/@thielypics?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Thierry K</a></em></p>
+</blockquote>
+<h2 id="approach">Approach</h2>
+<p>I added a simple periodical job on Continuous Integration (GitHub Actions):</p>
+<ol>
+<li>Checkout repository,</li>
+<li>Select several random files,</li>
+<li>Run safe lint auto-corrections,</li>
+<li>Create PR with new changes</li>
+</ol>
+<h3 id="open-pr-with-auto-corrections-changes">Open PR with auto-corrections changes</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>set -e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;-----Create and switch to new branch-----&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>current_date<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>date +<span style="color:#e6db74">&#34;%Y%m%d%H%M&#34;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>new_branch_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;auto-fix-lint-</span><span style="color:#e6db74">${</span>current_date<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>git checkout -b <span style="color:#e6db74">&#34;</span>$new_branch_name<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git config user.name <span style="color:#e6db74">&#34;jt-bot&#34;</span>
+</span></span><span style="display:flex;"><span>git config user.email <span style="color:#e6db74">&#34;bot@jetthoughts.com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;-----Run Rubocop-----&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># shellcheck disable=SC2046</span>
+</span></span><span style="display:flex;"><span>bin/rubocop --no-server --fail-level <span style="color:#e6db74">&#34;E&#34;</span> -a <span style="color:#66d9ef">$(</span>bin/rubocop --no-server -L **/*.rb | sort -R | head -n <span style="color:#ae81ff">5</span> | tr <span style="color:#e6db74">&#34;\n&#34;</span> <span style="color:#e6db74">&#34; &#34;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;-----Commit Updates-----&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>commit_message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Auto-fix lint warnings </span><span style="color:#e6db74">${</span>current_date<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git commit -am <span style="color:#e6db74">&#34;</span>$commit_message<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">(</span>bin/rubocop -aF --fail-level <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">&amp;&amp;</span> exit 1<span style="color:#f92672">)</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>  git commit -am <span style="color:#e6db74">&#34;</span>$commit_message<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">||</span>  exit <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> -z <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>GITHUB_TOKEN<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;No Pull Request, because no GITHUB_TOKEN passed!&#34;</span>
+</span></span><span style="display:flex;"><span>  exit <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  git push <span style="color:#e6db74">&#34;https://</span><span style="color:#e6db74">${</span>GITHUB_TOKEN<span style="color:#e6db74">}</span><span style="color:#e6db74">@github.com/</span><span style="color:#e6db74">${</span>GITHUB_USERNAME<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>GITHUB_REPONAME<span style="color:#e6db74">}</span><span style="color:#e6db74">.git&#34;</span> -f
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  curl -X POST <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -H <span style="color:#e6db74">&#34;Authorization: token </span><span style="color:#e6db74">${</span>GITHUB_TOKEN<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -d <span style="color:#e6db74">&#39;{&#34;title&#34;:&#34;&#39;</span><span style="color:#e6db74">&#34;</span>$commit_message<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;&#34;,&#34;base&#34;:&#34;develop&#34;,&#34;head&#34;:&#34;&#39;</span><span style="color:#e6db74">&#34;</span>$GITHUB_USERNAME<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;:&#39;</span><span style="color:#e6db74">&#34;</span>$new_branch_name<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;&#34;}&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    <span style="color:#e6db74">&#34;https://api.github.com/repos/</span><span style="color:#e6db74">${</span>GITHUB_USERNAME<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>GITHUB_REPONAME<span style="color:#e6db74">}</span><span style="color:#e6db74">/pulls&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><h4 id="by-lines">By Lines</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>current_date<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>date +<span style="color:#e6db74">&#34;%Y%m%d%H%M&#34;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>new_branch_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;auto-fix-lint-</span><span style="color:#e6db74">${</span>current_date<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>git checkout -b <span style="color:#e6db74">&#34;</span>$new_branch_name<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Create a unique branch to store our changes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git config user.name <span style="color:#e6db74">&#34;jt-bot&#34;</span>
+</span></span><span style="display:flex;"><span>git config user.email <span style="color:#e6db74">&#34;bot@jetthoughts.com&#34;</span>
+</span></span></code></pre></div><p>Set up Git to make commits.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/rubocop --no-server --fail-level <span style="color:#e6db74">&#34;E&#34;</span> -a <span style="color:#66d9ef">$(</span>bin/rubocop --no-server -L **/*.rb | sort -R | head -n <span style="color:#ae81ff">5</span> | tr <span style="color:#e6db74">&#34;\n&#34;</span> <span style="color:#e6db74">&#34; &#34;</span><span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>This line finds all supported by Rubocop files, shuffle and take top 5 (you can update it).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git commit -am <span style="color:#e6db74">&#34;</span>$commit_message<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">(</span>bin/rubocop -aF --fail-level <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">&amp;&amp;</span> exit 1<span style="color:#f92672">)</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>  git commit -am <span style="color:#e6db74">&#34;</span>$commit_message<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">||</span>  exit <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>If there are no changes from the previous step, we try to find the first file with changes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git push <span style="color:#e6db74">&#34;https://</span><span style="color:#e6db74">${</span>GITHUB_TOKEN<span style="color:#e6db74">}</span><span style="color:#e6db74">@github.com/</span><span style="color:#e6db74">${</span>GITHUB_USERNAME<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>GITHUB_REPONAME<span style="color:#e6db74">}</span><span style="color:#e6db74">.git&#34;</span> -f
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  curl -X POST <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -H <span style="color:#e6db74">&#34;Authorization: token </span><span style="color:#e6db74">${</span>GITHUB_TOKEN<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -d <span style="color:#e6db74">&#39;{&#34;title&#34;:&#34;&#39;</span><span style="color:#e6db74">&#34;</span>$commit_message<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;&#34;,&#34;base&#34;:&#34;develop&#34;,&#34;head&#34;:&#34;&#39;</span><span style="color:#e6db74">&#34;</span>$GITHUB_USERNAME<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;:&#39;</span><span style="color:#e6db74">&#34;</span>$new_branch_name<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;&#34;}&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    <span style="color:#e6db74">&#34;https://api.github.com/repos/</span><span style="color:#e6db74">${</span>GITHUB_USERNAME<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>GITHUB_REPONAME<span style="color:#e6db74">}</span><span style="color:#e6db74">/pulls&#34;</span>
+</span></span></code></pre></div><p>Pushes and creates PR with changes.</p>
+<h3 id="2-github-action-flow-with-scheduler">2. GitHub Action Flow with Scheduler</h3>
+<blockquote>
+<p><em><strong>Need to use Personal Tokens only for GitHub</strong> to get it you should use <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">GitHub Docs: Creating a personal access token</a>.</em> And more details why we need to use Personal Tokens: <a href="https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow">GitHub Docs: Triggering a workflow from a workflow</a></p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Auto-fix</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">schedule</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># * is a special character in YAML so you have to quote this string</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">cron</span>: <span style="color:#e6db74">&#39;0 0 * * 1,3&#39;</span> <span style="color:#75715e"># Each Monday and Wednesday</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">CI</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">RAILS_ENV</span>: <span style="color:#ae81ff">test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">concurrency</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">group</span>: <span style="color:#ae81ff">${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cancel-in-progress</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">rubocop</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">GITHUB_TOKEN</span>: <span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">GITHUB_USERNAME</span>: <span style="color:#ae81ff">jetthoughts</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">GITHUB_REPONAME</span>: <span style="color:#ae81ff">jt_tools</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">fetch-depth</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Set up Ruby</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">ruby/setup-ruby@v1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">bundler-cache</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create Pull Request with RuboCop fixes (3 retries)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">continue-on-error</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          bin/ci-generates-lint-fix || bin/ci-generates-lint-fix || bin/ci-generates-lint-fix</span>          
+</span></span></code></pre></div><h3 id="bonus-mark-pr-to-be-auto-merged-and-request-code-review">Bonus: mark PR to be auto-merged and request code review</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Enable auto-merge for bots&#39; PRs</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>: <span style="color:#ae81ff">pull_request</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">permissions</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">pull-requests</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">statuses</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">contents</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">select_for_auto_merge</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">if</span>: <span style="color:#ae81ff">${{ github.actor == &#39;github-actions[bot]&#39; ||  startsWith(github.head_ref, &#39;auto-&#39;) }}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Enable auto-merge for bots&#39; PRs</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          gh pr merge --auto --rebase &#34;$PR_URL&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          gh pr edit &#34;$PR_URL&#34; --add-reviewer &#34;@jetthoughts/developers&#34; --add-label &#34;Need to review&#34;</span>          
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">PR_URL</span>: <span style="color:#ae81ff">${{github.event.pull_request.html_url}}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">GITHUB_TOKEN</span>: <span style="color:#ae81ff">${{secrets.GITHUB_TOKEN}}</span>
+</span></span></code></pre></div><h2 id="and-we-got-atomic-habit">And we got &ldquo;Atomic Habit.&rdquo;</h2>
+<p>After several weeks you will get cleaned code, and there was no harm to Code Reviewers or Developers ;)</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/89lsilnrhv1hwto0bua3.png" alt="Result of the script"></p>
+<hr>
+<p><strong>Paul Keen</strong> is an Open Source Contributor and a Chief Technology Officer at <a href="https://www.jetthoughts.com">JetThoughts</a>. Follow him on <a href="https://www.linkedin.com/in/paul-keen/">LinkedIn</a> or <a href="https://github.com/pftg">GitHub</a>.</p>
+<blockquote>
+<p>If you enjoyed this story, we recommend reading our latest tech stories and trending <a href="https://jtway.co/trending">tech stories</a>.</p>
+</blockquote>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:1313/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

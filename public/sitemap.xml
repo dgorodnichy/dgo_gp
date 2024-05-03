@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost:52343/tags/bar/</loc>
+    <lastmod>2024-05-02T12:49:35+03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:52343/tags/foo/</loc>
+    <lastmod>2024-05-02T12:49:35+03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:52343/</loc>
+    <lastmod>2024-05-02T12:49:35+03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:52343/tags/</loc>
+    <lastmod>2024-05-02T12:49:35+03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:52343/test-post/</loc>
+    <lastmod>2024-05-02T12:49:35+03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:52343/posts/incremental-lint-fixes-by-github-actions-38o8/</loc>
+    <lastmod>2024-04-26T16:46:43+03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:52343/posts/</loc>
+    <lastmod>2024-04-26T16:46:43+03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:52343/categories/</loc>
+  </url>
+</urlset>
