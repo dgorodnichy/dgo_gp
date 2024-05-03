@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>How we configure Simplecov for our Ruby on Rails projects. | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Here’s a step-by-step guide to setting up simplecov with explanations of what each part of the code...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/how-we-configure-simplecov-for-our-ruby-on-rails-projects/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/how-we-configure-simplecov-for-our-ruby-on-rails-projects/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="How we configure Simplecov for our Ruby on Rails projects.">
+  <meta property="og:description" content="Here’s a step-by-step guide to setting up simplecov with explanations of what each part of the code...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Rails">
+    <meta property="article:tag" content="Testing">
+    <meta property="article:tag" content="Tutorial">
+
+  <meta itemprop="name" content="How we configure Simplecov for our Ruby on Rails projects.">
+  <meta itemprop="description" content="Here’s a step-by-step guide to setting up simplecov with explanations of what each part of the code...">
+  <meta itemprop="wordCount" content="479">
+  <meta itemprop="keywords" content="Ruby,Rails,Testing,Tutorial"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="How we configure Simplecov for our Ruby on Rails projects.">
+<meta name="twitter:description" content="Here’s a step-by-step guide to setting up simplecov with explanations of what each part of the code...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          How we configure Simplecov for our Ruby on Rails projects.
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p>Here’s a step-by-step guide to setting up simplecov with explanations of what each part of the code does:</p>
+<h2 id="step-1-install-the-simplecov-gem">Step 1: Install the simplecov gem</h2>
+<p>Add the following line to your Gemfile:</p>
+<p><code>gem ‘simplecov’</code>
+Then run bundle install to install the gem.</p>
+<h2 id="step-2-create-a-test-helper-file">Step 2: Create a test helper file</h2>
+<p>Create a file called spec_helper.rb or test_helper.rb in your project’s test directory if it does not exist.</p>
+<h2 id="step-3-require-the-simplecov-gem-and-start-coverage">Step 3: Require the simplecov gem and start coverage</h2>
+<p>In the <code>spec_helper.rb</code> or <code>test_helper.rb</code> file, add the following code to require the simplecov gem and start coverage:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>require <span style="color:#960050;background-color:#1e0010">‘</span>simplecov<span style="color:#960050;background-color:#1e0010">’</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SimpleCov</span><span style="color:#f92672">.</span>start <span style="color:#e6db74">&#39;rails&#39;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configuration options go here</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The ‘rails’ argument specifies the Rails formatter, which is used to generate coverage reports specific to Rails projects.</p>
+<h2 id="step-4-configure-coverage-filters">Step 4: Configure coverage filters</h2>
+<p>Inside the <code>SimpleCov.start</code> block, you can configure coverage filters to exclude certain files or directories from the coverage report. The add_filter method is used to specify these filters. In the given configuration, the following filters are applied:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>add_filter <span style="color:#e6db74">%w[
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  app/views 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  lib/rails 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  lib/templates
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  bin 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  coverage 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  log 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  test 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  vendor 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  node_modules 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  db 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  doc   
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  public 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  storage 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  tmp
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">]</span>
+</span></span></code></pre></div><p>This filter excludes files and directories commonly found in Rails projects that typically don’t contain application code.</p>
+<h2 id="step-5-add-non-default-groups-like-services-views-and-view-objects">Step 5: Add non default groups like Services, Views and View Objects</h2>
+<p>You can also group files in the coverage report to provide a better overview of code coverage. In the given configuration, the following groups are specified:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>add_group(<span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#66d9ef">Carriers</span><span style="color:#960050;background-color:#1e0010">’</span>, <span style="color:#960050;background-color:#1e0010">‘</span>app<span style="color:#f92672">/</span>carriers<span style="color:#960050;background-color:#1e0010">’</span>)
+</span></span><span style="display:flex;"><span>add_group(<span style="color:#e6db74">&#39;Scripts&#39;</span>, <span style="color:#e6db74">&#39;app/scripts&#39;</span>)
+</span></span><span style="display:flex;"><span>add_group(<span style="color:#e6db74">&#34;Views&#34;</span>, <span style="color:#e6db74">&#34;app/views&#34;</span>)
+</span></span></code></pre></div><p>These lines create two groups: “Carriers”, “Scripts” and “Views”.</p>
+<h2 id="step-6-enable-coverage-for-specific-features">Step 6: Enable coverage for specific features</h2>
+<p>The given configuration enables coverage for branches and coverage for eval methods by Kernel#eval:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>enable_coverage(<span style="color:#e6db74">:branch</span>)
+</span></span><span style="display:flex;"><span>enable_coverage_for_eval
+</span></span></code></pre></div><p>Enabling coverage for branches allows simplecov to track branch coverage in your code. Enabling coverage for eval methods ensures that code executed via eval is also included in the coverage report.</p>
+<h2 id="step-7-support-distributed-parallel-executions">Step 7: Support distributed parallel executions</h2>
+<p>If you’re running tests in parallel (e.g., using a tool like CircleCI or parallel test runners), you can set a custom command name for each job to differentiate them in the coverage report:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>parallel_number <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;CIRCLE_NODE_INDEX&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;CI_INDEX&#39;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;TEST_ENV_NUMBER&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;JOB_NUMBER&#39;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">].</span>compact<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;_&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> parallel_number<span style="color:#f92672">.</span>present?
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">SimpleCov</span><span style="color:#f92672">.</span>command_name <span style="color:#e6db74">&#34;Job </span><span style="color:#e6db74">#{</span>parallel_number<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This code retrieves the environment variables used by popular parallel testing tools and sets a unique command name for each job.</p>
+<h2 id="step-8-enable-additional-formatter-optional">Step 8: Enable additional formatter (optional)</h2>
+<p>If you want to use the Cobertura formatter to generate Cobertura-compatible coverage reports, you can enable it by requiring the simplecov-cobertura gem and setting the formatter:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#66d9ef">COBERTURA_ENABLED</span><span style="color:#960050;background-color:#1e0010">’</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  require <span style="color:#e6db74">&#39;simplecov-cobertura&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">SimpleCov</span><span style="color:#f92672">.</span>formatter <span style="color:#f92672">=</span> <span style="color:#66d9ef">SimpleCov</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Formatter</span><span style="color:#f92672">::</span><span style="color:#66d9ef">CoberturaFormatter</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This code checks if the COBERTURA_ENABLED environment variable is present and, if so, requires the simplecov-cobertura gem and sets the Cobertura formatter.</p>
+<p>That’s it! With these steps, you’ve successfully configured simplecov with the provided configuration. When you run your tests, simplecov will generate coverage reports based on this configuration.</p>
+<p>You can find the complete configuration code <a href="https://github.com/jetthoughts/jt_tools/blob/master/lib/install/.simplecov">here</a>. Happy Coding!</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

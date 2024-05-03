@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Custom ordering without custom SQL with Ruby on Rails 7 | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="The problem It&#39;s a common case for Rails applications to have enum fields on a model like:    class...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/custom-ordering-without-custom-sql-with-ruby-on-rails-7/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/custom-ordering-without-custom-sql-with-ruby-on-rails-7/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Custom ordering without custom SQL with Ruby on Rails 7">
+  <meta property="og:description" content="The problem It&#39;s a common case for Rails applications to have enum fields on a model like:    class...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Rails">
+    <meta property="article:tag" content="Webdev">
+    <meta property="article:tag" content="Sql">
+
+  <meta itemprop="name" content="Custom ordering without custom SQL with Ruby on Rails 7">
+  <meta itemprop="description" content="The problem It&#39;s a common case for Rails applications to have enum fields on a model like:    class...">
+  <meta itemprop="wordCount" content="354">
+  <meta itemprop="keywords" content="Ruby,Rails,Webdev,Sql"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Custom ordering without custom SQL with Ruby on Rails 7">
+<meta name="twitter:description" content="The problem It&#39;s a common case for Rails applications to have enum fields on a model like:    class...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          Custom ordering without custom SQL with Ruby on Rails 7
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g9kyft9312dd3d6u0lv3.png" alt="Custom order SQL"></p>
+<p><strong>The problem</strong>
+It&rsquo;s a common case for Rails applications to have <code>enum</code> fields on a model like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Review</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationRecord</span>
+</span></span><span style="display:flex;"><span>  enum <span style="color:#e6db74">status</span>: <span style="color:#f92672">[</span><span style="color:#e6db74">:pending</span>, <span style="color:#e6db74">:processing</span>, <span style="color:#e6db74">:completed</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>All&rsquo;s good until we need to sort records by their status in a specific order. For example, on reviews page records should be ordered by status in alphabetical order, but internally in DB status values are stored as integers.
+We can&rsquo;t just add <code>order(status: :asc)</code>. Previously we&rsquo;d have to write some custom SQL for the task:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Review</span><span style="color:#f92672">.</span>order(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  CASE status
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  WHEN 2 THEN 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  WHEN 0 THEN 2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  WHEN 1 THEN 3
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  END
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  ASC
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p><strong>The solution</strong>
+Ruby on Rails 7.0 provides a new query method <code>#in_order_of</code> which accepts as arguments a column name and an array of values in order we want the records to be ordered by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Review</span><span style="color:#f92672">.</span>in_order_of(
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:status</span>, <span style="color:#f92672">[</span><span style="color:#e6db74">:complete</span>, <span style="color:#e6db74">:pending</span>, <span style="color:#e6db74">:processing</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>Which translates to SQL query like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">&#34;reviews&#34;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#66d9ef">IN</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#66d9ef">CASE</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">2</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">3</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span> <span style="color:#66d9ef">ASC</span>
+</span></span></code></pre></div><p>This works well, as long as we don&rsquo;t have/care about reviews with <code>NULL</code> as their status.
+If we try to pass <code>nil</code> to the values array:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Review</span><span style="color:#f92672">.</span>in_order_of(
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:status</span>, <span style="color:#f92672">[</span><span style="color:#66d9ef">nil</span>, <span style="color:#e6db74">:complete</span>, <span style="color:#e6db74">:pending</span>, <span style="color:#e6db74">:processing</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>Following SQL would be created:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">&#34;reviews&#34;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#66d9ef">IN</span> (<span style="color:#66d9ef">NULL</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#66d9ef">CASE</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span> <span style="color:#66d9ef">ASC</span>
+</span></span></code></pre></div><p>But since <code>NULL</code> in SQL is a special value and <code>NULL != NULL</code>, then this query simply won&rsquo;t return records with <code>NULL</code> as a status at all.</p>
+<p><strong>The improvement</strong>
+Ruby on Rails 7.0.7 further improves the method: now it correctly handles the <code>NULL</code> values, so the resulting query would be:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">&#34;reviews&#34;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#66d9ef">IN</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">OR</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">NULL</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#66d9ef">CASE</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#34;reviews&#34;</span>.<span style="color:#e6db74">&#34;status&#34;</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span> <span style="color:#66d9ef">ASC</span>
+</span></span></code></pre></div><p>Now it does exactly what we need without writing any custom SQL queries.</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -4,7 +4,7 @@
     </article>
     {{/* Define a section to pull recent posts from. For Hugo 0.20 this will default to the section with the most number of pages. */}}
     {{ $mainSections := .Site.Params.mainSections | default (slice "post") }}
-    
+
     {{/* Check to see if the section is defined for ranging through it */}}
     {{range ($mainSections)}}
     {{/* Derive the section name  */}}
@@ -45,9 +45,6 @@
           {{ end }}
 
           {{/* As above, Use $section_name to get the section title, and URL. Use "with" to only show it if it exists */}}
-          {{ with .Site.GetPage "section" $section_name }}
-            <a href="{{ .RelPermalink }}" class="link db f6 pa2 br3 bg-mid-gray white dim w4 tc">{{ i18n "allTitle" . }}</a>
-          {{ end }}
           </section>
         {{ end }}
 
@@ -55,4 +52,4 @@
     {{ end }}
   {{ end }}
 {{end}}
-    
+

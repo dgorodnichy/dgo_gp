@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Data migrations with Rails | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Data migration is a common part of working with databases, and Ruby on Rails developers have many...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/data-migrations-with-rails/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/data-migrations-with-rails/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Data migrations with Rails">
+  <meta property="og:description" content="Data migration is a common part of working with databases, and Ruby on Rails developers have many...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Rails">
+    <meta property="article:tag" content="Webdev">
+    <meta property="article:tag" content="Database">
+
+  <meta itemprop="name" content="Data migrations with Rails">
+  <meta itemprop="description" content="Data migration is a common part of working with databases, and Ruby on Rails developers have many...">
+  <meta itemprop="wordCount" content="647">
+  <meta itemprop="keywords" content="Ruby,Rails,Webdev,Database"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Data migrations with Rails">
+<meta name="twitter:description" content="Data migration is a common part of working with databases, and Ruby on Rails developers have many...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          Data migrations with Rails
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p>Data migration is a common part of working with databases, and Ruby on Rails developers have many tools at their disposal. Still, it can be a challenge to get it right in every situation. Here are some tips for making sure your migrations go smoothly.</p>
+<p>The easiest way is just to have data migrations alongside with schema migrations. But as your code base grows this might become a problem.</p>
+<h2 id="problems">Problems</h2>
+<p><strong><em>Code coupling</em></strong>
+Data migrations depend on the existing code(models, service objects, etc.) over time code changes potentially breaking the migrations. Let&rsquo;s say you have a <code>Order</code> model and want to update a recently added attribute <code>fulfilled</code> to <code>true</code> for all orders created last year. You can do it with a simple migration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UpdateFulfilledIn2021</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Migration</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">up</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Order</span><span style="color:#f92672">.</span>all<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;created_at &lt; &#39;2022-01-01&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">.</span>update_all(<span style="color:#e6db74">fulfilled</span>: <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The above migration might fail:</p>
+<ol>
+<li>If <code>Order</code> model gets renamed or removed completely.</li>
+<li>If a new validation was added to the model.</li>
+<li>A new side effect via callback were added to the model. For example if an email gets sent to a customer after the <code>Order</code> record is updated with <code>fulfilled = 't'</code> , and you definitely don&rsquo;t want to bother customers from last year with emails they don&rsquo;t need.</li>
+</ol>
+<p><em><strong>Possibly long execution times</strong></em>
+Data migrations might take a lot of time to execute, depending on the amount of records you need to update, and the complexity of calculations to perform for each record. Long execution times can potentially break the deployment pipeline, or lead to some down time of the application.</p>
+<p><strong><em>Hard to test</em></strong>
+It&rsquo;s hard to write tests for migrations ensuring that the data is updated in a correct way, since a single error might lead to whole application data corruption requiring some down time to recover DB back to correct state.</p>
+<h2 id="possible-solutions">Possible solutions</h2>
+<p><strong><em>Inline model stubs</em></strong>
+Just define models class stubs with minimal required definitions. That way original model changes won&rsquo;t affect the migration. For the example from above:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UpdateFulfilledIn2021</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Migration</span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OrderStub</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationRecord</span>
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>table_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;orders&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">up</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">OrderStub</span><span style="color:#f92672">.</span>all<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;created_at &lt; &#39;2022-01-01&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#f92672">.</span>update_all(<span style="color:#e6db74">fulfilled</span>: <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Pros:</p>
+<ul>
+<li>Is not affected by actual model changes;</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Model logic and association definitions are duplicated;</li>
+</ul>
+<p><strong><em>Pure SQL</em></strong>
+Alternatively you can use pure SQL to modify your data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">up</span> 
+</span></span><span style="display:flex;"><span>  execute(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;UPDATE user_orders SET fulfilled = &#39;t&#39; 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     WHERE created_at &lt; &#39;2022-01-01&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Pros:</p>
+<ul>
+<li>Does not depend on the code;</li>
+<li>Does not require any additional setup;</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Get complex fast for non-trivial data changes;</li>
+<li>Duplicates association logic when need to join associated records;</li>
+<li>No progress indication for long running updates;</li>
+</ul>
+<p><em><strong>Rake tasks</strong></em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>task <span style="color:#e6db74">update_fulfilled_in_2021</span>: <span style="color:#e6db74">:environment</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">OrderStub</span><span style="color:#f92672">.</span>all<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;created_at &lt; &#39;2022-01-01&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">.</span>update_all(<span style="color:#e6db74">fulfilled</span>: <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Pros:</p>
+<ul>
+<li>Can be run on demand any time in background without affecting deployment process;</li>
+<li>Testable;</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>No clear indication that migration has already performed, so it&rsquo;s better be idempotent;</li>
+</ul>
+<p><strong><em>Data migration gem</em></strong>
+There are a couple of gems that helps organize your data migrations in the same way as schema migrations, one of the most known <a href="https://github.com/ilyakatz/data-migrate">data-migrate</a>. You can simply generate a new migration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rails g data_migration update_fulfilled_in_2021
+</span></span></code></pre></div><p>Generated data migrations are stored in <code>db/data</code> and then could be run with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rake data:migrate
+</span></span></code></pre></div><p>Pros:</p>
+<ul>
+<li>Has versioning the same way as schema migrations;</li>
+<li>Can be easily run during deployment;</li>
+<li>Testable: via either extracting logic into dedicated classes, or setting up a test helper to run the actual migration during tests;</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Additional setup;</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Each solution is good in it&rsquo;s own circumstances.</p>
+<p>For easy one time updates you can utilize Rails schema migrations or execute pure SQL. </p>
+<p>If you need to perform more complex data updates once in a month or so, then rake tasks might help you with that. </p>
+<p>But as your code base grows and migrations get bigger &amp; more complex it&rsquo;s better to utilize full data migration automation gem with version control and a way to test the updates before they hit the production database.</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

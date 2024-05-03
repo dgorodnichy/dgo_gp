@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52343&amp;path=livereload" data-no-instant defer></script>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
@@ -36,17 +36,16 @@
     
 
     
-      <link rel="canonical" href="http://localhost:52343/">
+      <link rel="canonical" href="http://localhost:52450/">
     
 
-    <meta property="og:url" content="http://localhost:52343/">
+    <meta property="og:url" content="http://localhost:52450/">
   <meta property="og:site_name" content="My New Hugo Site">
   <meta property="og:title" content="My New Hugo Site">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="website">
 
-  <meta itemprop="name" content="My New Hugo Site">
-  <meta itemprop="dateModified" content="2024-04-26T16:46:43+03:00"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="My New Hugo Site">
+  <meta itemprop="name" content="My New Hugo Site"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="My New Hugo Site">
 <meta name="twitter:description" content="">
 
 	
@@ -95,7 +94,7 @@
     </article>
     
     
-    
+
     
     
     
@@ -108,7 +107,7 @@
         
         
             <h1 class="flex-none">
-              Recent Posts
+              Recent My New Hugo Site
             </h1>
           
 
@@ -125,15 +124,17 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/incremental-lint-fixes-by-github-actions-38o8/" class="color-inherit dim link">
-            Incremental Lint Fixes by Github Actions 38o8
+          <a href="/align-remote-teams-with-okrs-and-impact-mapping/" class="color-inherit dim link">
+            Align remote teams with OKRs and Impact Mapping
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          How do you apply new lint rules to the legacy project with active development? Have you added standard gem recently, and now you are required to change a lot of files but could not apply them at once.
-I got the same problem, and we could not add a massive amount of the small changes because it would require regular rebasing while this PR is on review, or even some safe changes could cause annoying problems.
+          In today&rsquo;s fast-paced business environment, remote distributed teams are becoming increasingly common, especially among pre-seed startups.
+However, managing projects and coordinating business analysis workshops with limited resources can be challenging.
+The lack of a full-time project manager and the absence of real-time feedback from product sponsors often hinder development.
+To address these issues and support a cross-functional team with limited experience working with stakeholders, implementing a minimal cadence with OKRs and Impact Mapping can be the key to success.
         </div>
-          <a href="/posts/incremental-lint-fixes-by-github-actions-38o8/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+          <a href="/align-remote-teams-with-okrs-and-impact-mapping/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -150,14 +151,45 @@ I got the same problem, and we could not add a massive amount of the small chang
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/test-post/" class="color-inherit dim link">
-            Setting Up Docker for Ruby on Rails 7
+          <a href="/anonymous-block-argument-in-ruby/" class="color-inherit dim link">
+            Anonymous block argument in Ruby
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          
+          In the Ruby programming language, it is possible to use default block parameters instead of variables. This feature allows for more concise and expressive code.
+Before Ruby 2.7 We would need to write code like this:
+irb(main):005&gt; [1, 2, 3].map { |el| el } =&gt; [1, 2, 3] From Ruby 2.7 However, in Ruby 2.7, numbered parameters were introduced, which allows us to write code like this:
+irb(main):010&gt; [10, 100, 1000].
         </div>
-          <a href="/test-post/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+          <a href="/anonymous-block-argument-in-ruby/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+            </div>
+          
+            <div class="relative w-100 mb4">
+              
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/auto-install-system-dependencies-for-ruby-on-rails/" class="color-inherit dim link">
+            Auto-install system dependencies for Ruby on Rails
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Let&rsquo;s integrate Homebrew into our Ruby on Rails Project local set up.
+There is a convention for Ruby on Rails projects to use bin/setup to set up and install/update required dependencies. But by default, it does not include system dependencies.
+We are going to use the Homebrew Bundle tool for this.
+First, we need to have a Brewfile with:
+# Redis - For ActionCable support (and Sidekiq, caching, etc.) brew &#34;redis&#34; # PostgreSQL - brew install postgresql brew &#34;postgresql&#34; # Overmind (requires tmux) brew &#34;tmux&#34; brew &#34;overmind&#34; # Imagemagick or libvips - for processing images (avatars, file uploads, etc.
+        </div>
+          <a href="/auto-install-system-dependencies-for-ruby-on-rails/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -169,6 +201,38 @@ I got the same problem, and we could not add a massive amount of the small chang
         </section>
 
         
+        <section class="w-100">
+          <h1 class="f3">More</h1>
+          
+          
+            <h2 class="f5 fw4 mb4 dib mr3">
+              <a href="/custom-ordering-without-custom-sql-with-ruby-on-rails-7/" class="link black dim">
+                Custom ordering without custom SQL with Ruby on Rails 7
+              </a>
+            </h2>
+          
+            <h2 class="f5 fw4 mb4 dib mr3">
+              <a href="/custom-templates-for-rails-scaffolding/" class="link black dim">
+                Custom templates for Rails scaffolding
+              </a>
+            </h2>
+          
+            <h2 class="f5 fw4 mb4 dib mr3">
+              <a href="/data-migrations-with-rails/" class="link black dim">
+                Data migrations with Rails
+              </a>
+            </h2>
+          
+            <h2 class="f5 fw4 mb4 dib mr3">
+              <a href="/how-a-large-transaction-can-be-a-source-of-db-deadlocks-and-how-this-can-be-fixed/" class="link black dim">
+                How a large transaction can be a source of DB deadlocks and how this can be fixed.
+              </a>
+            </h2>
+          
+
+          
+          </section>
+        
 
         </div>
     
@@ -177,7 +241,7 @@ I got the same problem, and we could not add a massive amount of the small chang
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52343/" >
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
     &copy;  My New Hugo Site 2024 
   </a>
     <div>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Upgrading PostgreSQL on Heroku: A Step-by-Step Guide | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Are you looking to upgrade your PostgreSQL database on Heroku? Whether it&#39;s for performance...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/upgrading-postgresql-on-heroku-a-step-by-step-guide/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/upgrading-postgresql-on-heroku-a-step-by-step-guide/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Upgrading PostgreSQL on Heroku: A Step-by-Step Guide">
+  <meta property="og:description" content="Are you looking to upgrade your PostgreSQL database on Heroku? Whether it&#39;s for performance...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Database">
+    <meta property="article:tag" content="Heroku">
+    <meta property="article:tag" content="Rails">
+    <meta property="article:tag" content="Webdev">
+
+  <meta itemprop="name" content="Upgrading PostgreSQL on Heroku: A Step-by-Step Guide">
+  <meta itemprop="description" content="Are you looking to upgrade your PostgreSQL database on Heroku? Whether it&#39;s for performance...">
+  <meta itemprop="wordCount" content="473">
+  <meta itemprop="keywords" content="Database,Heroku,Rails,Webdev"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Upgrading PostgreSQL on Heroku: A Step-by-Step Guide">
+<meta name="twitter:description" content="Are you looking to upgrade your PostgreSQL database on Heroku? Whether it&#39;s for performance...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          Upgrading PostgreSQL on Heroku: A Step-by-Step Guide
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p>Are you looking to upgrade your PostgreSQL database on Heroku? Whether it&rsquo;s for performance improvements or staying up-to-date with the latest features, upgrading your database is a crucial task. In this guide, we&rsquo;ll walk you through the process of upgrading PostgreSQL on Heroku with clear, step-by-step instructions.</p>
+<h2 id="1-create-a-dbfollower">1. Create a DB Follower</h2>
+<p>The first step in the PostgreSQL upgrade process is to create a database follower. This is essential for minimizing downtime during the upgrade.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku addons:create heroku-postgresql:standard-0 --follow HEROKU_POSTGRESQL_OLD --app your_app_name
+</span></span></code></pre></div><p>Replace <code>HEROKU_POSTGRESQL_OLD_URL</code>, <code>standard-0</code>, and <code>your_app_name</code> with values specific for your app configuration.
+Wait for the follower to start up:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku pg:wait --app your_app_name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># You can check the follower&#39;s status</span>
+</span></span><span style="display:flex;"><span>heroku pg:info --app your_app_name
+</span></span></code></pre></div><p>Wait for the follower to catch up, we&rsquo;ll need the follower to be fully in sync to minimize the downtime. In the follower DB info it should contain <code>Behind By: 0 commits</code>.</p>
+<h2 id="2-turn-on-maintenance-mode">2. Turn on Maintenance Mode</h2>
+<p>To ensure a smooth upgrade process, it&rsquo;s recommended to turn on maintenance mode for your app.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku maintenance:on --app your_app_name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check the maintenance status</span>
+</span></span><span style="display:flex;"><span>heroku maintenance --app your_app_name
+</span></span></code></pre></div><h2 id="3-upgrade-thefollower">3. Upgrade the Follower</h2>
+<p>Before upgrading, confirm that the follower has caught up fully:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku pg:info --app your_app_name
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Should have Behind By:   0 commits</span>
+</span></span></code></pre></div><p>Now, proceed with the upgrade:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku pg:upgrade HEROKU_POSTGRESQL_FOLLOWER_URL --app your_app_name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>heroku pg:wait --app your_app_name
+</span></span></code></pre></div><h2 id="4-promote-thefollower">4. Promote the Follower</h2>
+<p>Promote the upgraded follower to be the new primary database:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku pg:promote HEROKU_POSTGRESQL_FOLLOWER_URL --app your_app_name
+</span></span></code></pre></div><h2 id="5-stop-maintenance-mode">5. Stop Maintenance Mode</h2>
+<p>Once the upgrade and promotion are complete, turn off maintenance mode:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku maintenance:off --app your_app_name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify the status:</span>
+</span></span><span style="display:flex;"><span>heroku pg:info --app your_app_name
+</span></span></code></pre></div><h2 id="6-ensure-that-the-app-works-correctly--all-app-data-ispresent">6. Ensure that the app works correctly &amp; all app data is present.</h2>
+<p>Make sure that all parts of the app are using the new DB, perform automated &amp; manual checks to verify that everything works as expected. You can wait a couple of days/weeks (in case if there are some daily/weekly background jobs/tasks) to ensure that there&rsquo;re no longer requests to the old DB.
+In case of any issues found on this step you can quickly switch back to using the old DB, fix them &amp; repeat the upgrade steps at a later time.</p>
+<h2 id="7-destroy-the-olddatabase">7. Destroy the Old Database</h2>
+<p>Finally, you can safely destroy the old database to clean up resources:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>heroku addons:destroy HEROKU_POSTGRESQL_OLD --app your_app_name
+</span></span></code></pre></div><p>Congratulations! You have successfully upgraded your PostgreSQL database on Heroku. This process ensures minimal downtime and a smooth transition to the latest version. Keep in mind that database upgrades should be performed with caution, and it&rsquo;s recommended to have backups in place before initiating any major changes.</p>
+<h2 id="further-improvements">Further improvements</h2>
+<p>To minimize downtime, you can consider configuring you app to use multiple database setup: with primary/replica DBs. Instead of switching maintenance mode on, you can switch to read-only mode. There&rsquo;s a gem called <a href="https://github.com/discourse/rails_failover">rails_failover</a> that makes the set up easier.</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

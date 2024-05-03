@@ -2,25 +2,213 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>My New Hugo Site</title>
-    <link>http://localhost:52343/</link>
+    <link>http://localhost:52450/</link>
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Apr 2024 16:46:43 +0300</lastBuildDate>
-    <atom:link href="http://localhost:52343/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:52450/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Incremental Lint Fixes by Github Actions 38o8</title>
-      <link>http://localhost:52343/posts/incremental-lint-fixes-by-github-actions-38o8/</link>
-      <pubDate>Fri, 26 Apr 2024 16:46:43 +0300</pubDate>
-      <guid>http://localhost:52343/posts/incremental-lint-fixes-by-github-actions-38o8/</guid>
+      <title>Align remote teams with OKRs and Impact Mapping</title>
+      <link>http://localhost:52450/align-remote-teams-with-okrs-and-impact-mapping/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/align-remote-teams-with-okrs-and-impact-mapping/</guid>
+      <description>In today&amp;rsquo;s fast-paced business environment, remote distributed teams are becoming increasingly common, especially among pre-seed startups.&#xA;However, managing projects and coordinating business analysis workshops with limited resources can be challenging.&#xA;The lack of a full-time project manager and the absence of real-time feedback from product sponsors often hinder development.&#xA;To address these issues and support a cross-functional team with limited experience working with stakeholders, implementing a minimal cadence with OKRs and Impact Mapping can be the key to success.</description>
+    </item>
+    <item>
+      <title>Anonymous block argument in Ruby</title>
+      <link>http://localhost:52450/anonymous-block-argument-in-ruby/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/anonymous-block-argument-in-ruby/</guid>
+      <description>In the Ruby programming language, it is possible to use default block parameters instead of variables. This feature allows for more concise and expressive code.&#xA;Before Ruby 2.7 We would need to write code like this:&#xA;irb(main):005&amp;gt; [1, 2, 3].map { |el| el } =&amp;gt; [1, 2, 3] From Ruby 2.7 However, in Ruby 2.7, numbered parameters were introduced, which allows us to write code like this:&#xA;irb(main):010&amp;gt; [10, 100, 1000].</description>
+    </item>
+    <item>
+      <title>Auto-install system dependencies for Ruby on Rails</title>
+      <link>http://localhost:52450/auto-install-system-dependencies-for-ruby-on-rails/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/auto-install-system-dependencies-for-ruby-on-rails/</guid>
+      <description>Let&amp;rsquo;s integrate Homebrew into our Ruby on Rails Project local set up.&#xA;There is a convention for Ruby on Rails projects to use bin/setup to set up and install/update required dependencies. But by default, it does not include system dependencies.&#xA;We are going to use the Homebrew Bundle tool for this.&#xA;First, we need to have a Brewfile with:&#xA;# Redis - For ActionCable support (and Sidekiq, caching, etc.) brew &amp;#34;redis&amp;#34; # PostgreSQL - brew install postgresql brew &amp;#34;postgresql&amp;#34; # Overmind (requires tmux) brew &amp;#34;tmux&amp;#34; brew &amp;#34;overmind&amp;#34; # Imagemagick or libvips - for processing images (avatars, file uploads, etc.</description>
+    </item>
+    <item>
+      <title>Custom ordering without custom SQL with Ruby on Rails 7</title>
+      <link>http://localhost:52450/custom-ordering-without-custom-sql-with-ruby-on-rails-7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/custom-ordering-without-custom-sql-with-ruby-on-rails-7/</guid>
+      <description>The problem It&amp;rsquo;s a common case for Rails applications to have enum fields on a model like:&#xA;class Review &amp;lt; ApplicationRecord enum status: [:pending, :processing, :completed] end All&amp;rsquo;s good until we need to sort records by their status in a specific order. For example, on reviews page records should be ordered by status in alphabetical order, but internally in DB status values are stored as integers. We can&amp;rsquo;t just add order(status: :asc).</description>
+    </item>
+    <item>
+      <title>Custom templates for Rails scaffolding</title>
+      <link>http://localhost:52450/custom-templates-for-rails-scaffolding/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/custom-templates-for-rails-scaffolding/</guid>
+      <description>Rails has a very handy tool for rapid development called scaffolding. Often programmers ignore it, because some things have to be written by hand anyway. I will tell you how you can minimize manual coding by using custom templates.&#xA;We need to override the templates provided by the Rails. You can find them in this way:&#xA;╰─ $ bundle show railties /Users/sampleuser/.rbenv/versions/3.1.1/lib/ruby/gems/3.1.0/gems/railties-7.0.2.3 It means that the files we are interested in are located in this path:</description>
+    </item>
+    <item>
+      <title>Data migrations with Rails</title>
+      <link>http://localhost:52450/data-migrations-with-rails/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/data-migrations-with-rails/</guid>
+      <description>Data migration is a common part of working with databases, and Ruby on Rails developers have many tools at their disposal. Still, it can be a challenge to get it right in every situation. Here are some tips for making sure your migrations go smoothly.&#xA;The easiest way is just to have data migrations alongside with schema migrations. But as your code base grows this might become a problem.&#xA;Problems Code coupling Data migrations depend on the existing code(models, service objects, etc.</description>
+    </item>
+    <item>
+      <title>How a large transaction can be a source of DB deadlocks and how this can be fixed.</title>
+      <link>http://localhost:52450/how-a-large-transaction-can-be-a-source-of-db-deadlocks-and-how-this-can-be-fixed/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-a-large-transaction-can-be-a-source-of-db-deadlocks-and-how-this-can-be-fixed/</guid>
+      <description>Recently in a project, we encountered the fact that sometimes we had a DB Deadlocks error. After some experiments, we realized that this is due to the fact that we have too large a transaction and it mixes searching creating, and updating actions.&#xA;Code example (In the real project, the transaction was much larger):&#xA;ActiveRecord::Base.transaction do # 1. Creating a new order order = Order.create(user_id: current_user.id, total_price: 0) # 2.</description>
+    </item>
+    <item>
+      <title>How to create circles in CSS</title>
+      <link>http://localhost:52450/how-to-create-circles-in-css/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-to-create-circles-in-css/</guid>
+      <description>Let&amp;rsquo;s look at a few tricks in CSS able to create basic shapes like circles.&#xA;&amp;lt;div class=&amp;#34;circle&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; Border-Radius For this case need to use the border-radius property and set the value to 50%. Then combine the height and width properties with a matching value.&#xA;.circle { width: 100px; height: 100px; border-radius: 50%; background: lightgreen; } Circle() In this, the circle is created using the shape-outside property. You must also apply a clip-path with the appropriate property to make the circle appear.</description>
+    </item>
+    <item>
+      <title>How to create triangles in TailwindCSS</title>
+      <link>http://localhost:52450/how-to-create-triangles-in-tailwindcss/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-to-create-triangles-in-tailwindcss/</guid>
+      <description>In this post, we are going to see four examples to draw a triangle in TailwindCSS using borders.&#xA;Triangle Down Triangle is one of the simplest shapes in geometry. It can be drawn with just three straight lines and a couple of angles.&#xA;Set a width and height of 0 by: w-0 and h-0 Set the top border to have the full height and color by: border-t-[75px] border-t-red-500 Set the side borders to half the width with the color transparent by: border-l-[50px] border-l-transparent and border-r-[50px] border-r-transparent &amp;lt;div class=&amp;#34;w-0 h-0 border-l-[50px] border-l-transparent border-t-[75px] border-t-red-500 border-r-[50px] border-r-transparent&amp;#34;&amp;gt; &amp;lt;/div&amp;gt; Triangle Left &amp;lt;div class=&amp;#34;w-0 h-0 border-t-[50px] border-t-transparent border-r-[75px] border-r-blue-500 border-b-[50px] border-b-transparent&amp;#34;&amp;gt; &amp;lt;/div&amp;gt; Triangle Up &amp;lt;div class=&amp;#34;w-0 h-0 border-l-[50px] border-l-transparent border-b-[75px] border-b-yellow-500 border-r-[50px] border-r-transparent&amp;#34;&amp;gt; &amp;lt;/div&amp;gt; Triangle Right &amp;lt;div class=&amp;#34;w-0 h-0 border-t-[50px] border-t-transparent border-l-[75px] border-l-green-500 border-b-[50px] border-b-transparent&amp;#34;&amp;gt; &amp;lt;/div&amp;gt; In this post, we showed examples of a simple equilateral triangle.</description>
+    </item>
+    <item>
+      <title>How to keep clean Ruby on Rails views with the Null Object pattern</title>
+      <link>http://localhost:52450/how-to-keep-clean-ruby-on-rails-views-with-the-null-object-pattern/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-to-keep-clean-ruby-on-rails-views-with-the-null-object-pattern/</guid>
+      <description>One of the most common errors developers encounter is NoMethodError. It occurs when code is executed according to a script not provided by the programmer.&#xA;Junior devs often try to solve this problem in a non optimal way. Let’s look at some examples of bad code:&#xA;@user = User.find_by(email: &amp;#34;deleted@user.com&amp;#34;) @user.first_name If the user is not in the database or is flagged as “deleted”. Then we will get an error:</description>
+    </item>
+    <item>
+      <title>How to make vertically scrollable in CSS</title>
+      <link>http://localhost:52450/how-to-make-vertically-scrollable-in-css/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-to-make-vertically-scrollable-in-css/</guid>
+      <description>In order for the scroll to appear, you need to limit its height by adding height or max-height properties.&#xA;.scroll-area { overflow-y: auto; max-height: 400px; } If you do not add this, your block will stretch to the entire height.</description>
+    </item>
+    <item>
+      <title>How to use Ruby on Rails Concerns</title>
+      <link>http://localhost:52450/how-to-use-ruby-on-rails-concerns/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-to-use-ruby-on-rails-concerns/</guid>
+      <description>A Rails concern is a module that extends the ActiveSupport::Concern module.&#xA;You can use Сoncerns to store common code for several classes there, or for refactoring to separate semantically similar code in separate modules.&#xA;A concern provides two blocks:&#xA;module SampleConcern extend ActiveSupport::Concern included do ... end class_methods do ... end end included: The code inside the included block is evaluated in the context of the including class.&#xA;class_methods: Here you can implement methods that will become methods of the class to which the container is included.</description>
+    </item>
+    <item>
+      <title>How we configure Simplecov for our Ruby on Rails projects.</title>
+      <link>http://localhost:52450/how-we-configure-simplecov-for-our-ruby-on-rails-projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-we-configure-simplecov-for-our-ruby-on-rails-projects/</guid>
+      <description>Here’s a step-by-step guide to setting up simplecov with explanations of what each part of the code does:&#xA;Step 1: Install the simplecov gem Add the following line to your Gemfile:&#xA;gem ‘simplecov’ Then run bundle install to install the gem.&#xA;Step 2: Create a test helper file Create a file called spec_helper.rb or test_helper.rb in your project’s test directory if it does not exist.&#xA;Step 3: Require the simplecov gem and start coverage In the spec_helper.</description>
+    </item>
+    <item>
+      <title>How WIP Limits improves effectiveness?</title>
+      <link>http://localhost:52450/how-wip-limits-improves-effectiveness/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/how-wip-limits-improves-effectiveness/</guid>
+      <description>A work-in-progress (WIP) limit is a technique used in agile project management to improve team effectiveness. The idea behind WIP limits is to limit the number of tasks that a team is working on at any given time. By limiting the amount of work that is in progress, teams can focus on completing tasks more efficiently and effectively.&#xA;Here are some ways in which WIP limits can help to improve team effectiveness:</description>
+    </item>
+    <item>
+      <title>Improving Ruby on Rails Test Suite Performance by Disabling Animations</title>
+      <link>http://localhost:52450/improving-ruby-on-rails-test-suite-performance-by-disabling-animations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/improving-ruby-on-rails-test-suite-performance-by-disabling-animations/</guid>
+      <description>Have you ever encountered random failing tests using the Ruby on Rails system tests? If so, you may be surprised to learn that animations could be the culprit. We’ll explain why animations can cause random failing tests and how disabling them can improve test performance.&#xA;Understanding the problem Animations introduce an unpredictable timing factor that complicates test control. During testing, animations may take longer to finalize than anticipated, resulting in failures.</description>
+    </item>
+    <item>
+      <title>Incremental lint fixes by GitHub Actions</title>
+      <link>http://localhost:52450/incremental-lint-fixes-by-github-actions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/incremental-lint-fixes-by-github-actions/</guid>
       <description>How do you apply new lint rules to the legacy project with active development? Have you added standard gem recently, and now you are required to change a lot of files but could not apply them at once.&#xA;I got the same problem, and we could not add a massive amount of the small changes because it would require regular rebasing while this PR is on review, or even some safe changes could cause annoying problems.</description>
     </item>
     <item>
-      <title>Setting Up Docker for Ruby on Rails 7</title>
-      <link>http://localhost:52343/test-post/</link>
+      <title>Install Official Firefox .deb in Dockerfile</title>
+      <link>http://localhost:52450/install-official-firefox-deb-in-dockerfile/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:52343/test-post/</guid>
-      <description></description>
+      <guid>http://localhost:52450/install-official-firefox-deb-in-dockerfile/</guid>
+      <description>Mozilla announced its dedicated APT repo for Debian-based distros, including Ubuntu, containing new stable releases of Firefox as a DEB package with the release of Firefox 122 in January 2023.&#xA;Mozilla recommends this way because it ensures Firefox and all the required libraries are installed and configured optimally for your distribution.&#xA;To install from a Dockerfile, follow these steps:&#xA;# Install Firefox from Mozilla RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \ --mount=type=cache,target=/var/lib/apt,sharing=locked \ --mount=type=tmpfs,target=/var/log \ # Create a directory to store APT repository keys, repository lists, and preferences if they don&amp;#39;t exist install -d -m 0755 /etc/apt/keyrings /etc/apt/preferences.</description>
+    </item>
+    <item>
+      <title>Integrating Bun with Vite Ruby for Lightning-Fast Frontend Builds</title>
+      <link>http://localhost:52450/integrating-bun-with-vite-ruby-for-lightning-fast-frontend-builds/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/integrating-bun-with-vite-ruby-for-lightning-fast-frontend-builds/</guid>
+      <description>With the recent release of Bun and its newfound support for Vite, coupled with Ruby on Rails 7.1 incorporating native support for Bun, developers can now enhance their web development workflow significantly. Here is the effortless process of enabling Bun for Vite Ruby, ultimately streamlining your front-end builds.&#xA;Getting Started: Creating a Shim Bin To kick things off, you need to create a shim bin. Navigate to the bin/shims directory and add a file named vite with the following content:</description>
+    </item>
+    <item>
+      <title>More control over enum in Rails 7.1</title>
+      <link>http://localhost:52450/more-control-over-enum-in-rails-71/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/more-control-over-enum-in-rails-71/</guid>
+      <description>ActiveRecord::Enum in Rails have long been a convenient tool for representing a set of symbolic values within a model. However, using enum can sometimes lead to unexpected behavior, especially when it comes to the automatic generation of instance methods. For instance, consider an Order model with an enum for status:&#xA;class Order &amp;lt; ApplicationRecord enum status: [:pending, :processed] end Instance objects would have a convenient methods like order.pending?, order.processed?. One of common possible issues with generated instance methods might be naming conflicts.</description>
+    </item>
+    <item>
+      <title>Optimize your Chrome options for testing to get x1.25 impact</title>
+      <link>http://localhost:52450/optimize-your-chrome-options-for-testing-to-get-x125-impact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/optimize-your-chrome-options-for-testing-to-get-x125-impact/</guid>
+      <description>🚀 Increase Browser Test Speed with Chrome Options Optimization 🚀&#xA;Are you looking to supercharge your browser tests and optimize their speed? By fine-tuning your Chrome browser options, you can significantly enhance the performance of your automated tests.&#xA;Below are some Chrome options that helped me get x1.25 improvement:&#xA;CHROME_ARGS = { &amp;#39;allow-running-insecure-content&amp;#39; =&amp;gt; nil, &amp;#39;autoplay-policy&amp;#39; =&amp;gt; &amp;#39;user-gesture-required&amp;#39;, &amp;#39;disable-add-to-shelf&amp;#39; =&amp;gt; nil, &amp;#39;disable-background-networking&amp;#39; =&amp;gt; nil, &amp;#39;disable-background-timer-throttling&amp;#39; =&amp;gt; nil, &amp;#39;disable-backgrounding-occluded-windows&amp;#39; =&amp;gt; nil, &amp;#39;disable-breakpad&amp;#39; =&amp;gt; nil, &amp;#39;disable-checker-imaging&amp;#39; =&amp;gt; nil, &amp;#39;disable-client-side-phishing-detection&amp;#39; =&amp;gt; nil, &amp;#39;disable-component-extensions-with-background-pages&amp;#39; =&amp;gt; nil, &amp;#39;disable-datasaver-prompt&amp;#39; =&amp;gt; nil, &amp;#39;disable-default-apps&amp;#39; =&amp;gt; nil, &amp;#39;disable-desktop-notifications&amp;#39; =&amp;gt; nil, &amp;#39;disable-dev-shm-usage&amp;#39; =&amp;gt; nil, &amp;#39;disable-domain-reliability&amp;#39; =&amp;gt; nil, &amp;#39;disable-extensions&amp;#39; =&amp;gt; nil, &amp;#39;disable-features&amp;#39; =&amp;gt; &amp;#39;TranslateUI,BlinkGenPropertyTrees&amp;#39;, &amp;#39;disable-hang-monitor&amp;#39; =&amp;gt; nil, &amp;#39;disable-infobars&amp;#39; =&amp;gt; nil, &amp;#39;disable-ipc-flooding-protection&amp;#39; =&amp;gt; nil, &amp;#39;disable-notifications&amp;#39; =&amp;gt; nil, &amp;#39;disable-popup-blocking&amp;#39; =&amp;gt; nil, &amp;#39;disable-prompt-on-repost&amp;#39; =&amp;gt; nil, &amp;#39;disable-renderer-backgrounding&amp;#39; =&amp;gt; nil, &amp;#39;disable-setuid-sandbox&amp;#39; =&amp;gt; nil, &amp;#39;disable-site-isolation-trials&amp;#39; =&amp;gt; nil, &amp;#39;disable-sync&amp;#39; =&amp;gt; nil, &amp;#39;disable-web-security&amp;#39; =&amp;gt; nil, &amp;#39;enable-automation&amp;#39; =&amp;gt; nil, &amp;#39;force-color-profile&amp;#39; =&amp;gt; &amp;#39;srgb&amp;#39;, &amp;#39;force-device-scale-factor&amp;#39; =&amp;gt; &amp;#39;1&amp;#39;, &amp;#39;ignore-certificate-errors&amp;#39; =&amp;gt; nil, &amp;#39;js-flags&amp;#39; =&amp;gt; &amp;#39;--random-seed=1157259157&amp;#39;, &amp;#39;disable-logging&amp;#39; =&amp;gt; nil, &amp;#39;metrics-recording-only&amp;#39; =&amp;gt; nil, &amp;#39;mute-audio&amp;#39; =&amp;gt; nil, &amp;#39;no-default-browser-check&amp;#39; =&amp;gt; nil, &amp;#39;no-first-run&amp;#39; =&amp;gt; nil, &amp;#39;no-sandbox&amp;#39; =&amp;gt; nil, &amp;#39;password-store&amp;#39; =&amp;gt; &amp;#39;basic&amp;#39;, &amp;#39;test-type&amp;#39; =&amp;gt; nil, &amp;#39;use-mock-keychain&amp;#39; =&amp;gt; nil }.</description>
+    </item>
+    <item>
+      <title>Ruby on Rails Views Resources for Frontend Developer</title>
+      <link>http://localhost:52450/ruby-on-rails-views-resources-for-frontend-developer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/ruby-on-rails-views-resources-for-frontend-developer/</guid>
+      <description>🚀 Excited to share some awesome resources to help front-end developers onboard into the Ruby on Rails Views kitchen! 🎉&#xA;1️⃣ ViewComponent: If you&amp;rsquo;re looking for a powerful way to build Rails views, look no further! Check out ViewComponent, the first component-based library in the Rails world. It allows you to break down complex UIs into reusable and manageable components, making your codebase cleaner and more maintainable. Head over to https://viewcomponent.</description>
+    </item>
+    <item>
+      <title>Setting Up Docker for Ruby on Rails 7</title>
+      <link>http://localhost:52450/setting-up-docker-for-ruby-on-rails-7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/setting-up-docker-for-ruby-on-rails-7/</guid>
+      <description>Introduction: Docker is essential for modern software development, ensuring a consistent environment and simplifying setup. This article guides you through configuring Docker for Ruby on Rails 7, enhancing workflow efficiency and collaboration. Prerequisites: Before diving into Dockerizing your Ruby on Rails 7 application, ensure you have Docker installed on your system. Below are instructions for installing Docker:&#xA;for Mac for Windows for Linux For example to install Docker on Ubuntu, run the following commands in the terminal:</description>
+    </item>
+    <item>
+      <title>Stimulus Keyboard Event Filter</title>
+      <link>http://localhost:52450/stimulus-keyboard-event-filter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/stimulus-keyboard-event-filter/</guid>
+      <description>What it was In the last update of Stimulus v3.2.2, the ability to filter the event by PageDown and PageUp keys was added.&#xA;Before that, in v3.2.1, it looked like this:&#xA;&amp;lt;div data-action=&amp;#34;keyup-&amp;gt;myController#myfunction&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; and some like this&amp;hellip;&#xA;import { Controller } from &amp;#34;stimulus&amp;#34;; export default class extends Controller { connect() { // Add a keydown event listener when the controller is connected to the DOM document.addEventListener(&amp;#34;keydown&amp;#34;, this.handleKeyDown); } disconnect() { // Remove the keydown event listener when the controller is disconnected document.</description>
+    </item>
+    <item>
+      <title>Team Structure for MVP</title>
+      <link>http://localhost:52450/our-mvp-team-structure/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/our-mvp-team-structure/</guid>
+      <description>In structuring a team for MVP, we should consider the following: there is a massive number of uncertainties. We have to work with assumptions and bets.&#xA;The goal for the business is to find a good enough solution for a reasonable budget: ROI. It&amp;rsquo;s vital to have the fastest feedback loop to prevent dramatic waste.&#xA;Here is how I see the team structure: Project Manager / Owner Designer Developers: 2 Fullstack and 1 Frontend Product Manager / Owner They define the product&amp;rsquo;s vision, so the rest of the team will follow.</description>
+    </item>
+    <item>
+      <title>TL;DR: Move CI/CD scripts into .automation</title>
+      <link>http://localhost:52450/tldr-move-cicd-scripts-into-automation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/tldr-move-cicd-scripts-into-automation/</guid>
+      <description>Today our /bin folder has become overwhelmed with different development tools and scripts.&#xA;We put everything there: local automations, CI/CD helpers, PAAS release scripts, Dockerfile helpers, etc.&#xA;It becomes too hard to find appropriate tools for your problem in that mess.&#xA;I had several revisions on decomposing the /bin scripts and the whole directory, but I still have not found one solution.&#xA;I have played with subfolders /bin/heorku/release and prefixes /bin/ci-setup.</description>
+    </item>
+    <item>
+      <title>Troubleshooting ruby build</title>
+      <link>http://localhost:52450/troubleshooting-ruby-build/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/troubleshooting-ruby-build/</guid>
+      <description>Have you found problems building ruby on a local machine? How to configure your local environment once and for all?&#xA;Building ruby is dependent on several key elements: build tools, compilers, linkers, also shared libraries like openssl, libyaml, readline and etc. And we need to help ruby-build to find all those tools and libraries.&#xA;The shared solution is designed for macOS with Homebrew.&#xA;Install system packages brew install gmp libyaml rbenv readline zlib As a bonus, it will also install Xcode Command Line Tools.</description>
+    </item>
+    <item>
+      <title>Upgrading PostgreSQL on Heroku: A Step-by-Step Guide</title>
+      <link>http://localhost:52450/upgrading-postgresql-on-heroku-a-step-by-step-guide/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/upgrading-postgresql-on-heroku-a-step-by-step-guide/</guid>
+      <description>Are you looking to upgrade your PostgreSQL database on Heroku? Whether it&amp;rsquo;s for performance improvements or staying up-to-date with the latest features, upgrading your database is a crucial task. In this guide, we&amp;rsquo;ll walk you through the process of upgrading PostgreSQL on Heroku with clear, step-by-step instructions.&#xA;1. Create a DB Follower The first step in the PostgreSQL upgrade process is to create a database follower. This is essential for minimizing downtime during the upgrade.</description>
+    </item>
+    <item>
+      <title>What is Ruby on Rails Middleware.</title>
+      <link>http://localhost:52450/what-is-ruby-on-rails-middleware/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/what-is-ruby-on-rails-middleware/</guid>
+      <description>The middleware component sits between the client and the server, processing inbound requests and outbound responses. The middleware is used for tasks that are not related to business logic of your application.&#xA;A list of tasks that are commonly solved with the help of middleware:&#xA;Caching Logging Sessions Performance &amp;amp; Usage Monitoring Security Serving static files (css, js, images, etc) How to make your own middleware. Every Rails application is based on Rack server.</description>
+    </item>
+    <item>
+      <title>When to use Microservices?</title>
+      <link>http://localhost:52450/when-to-use-microservices/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:52450/when-to-use-microservices/</guid>
+      <description>Microservices are a software architecture design pattern in which a large application is built as a collection of small, independent services that communicate with each other over well-defined interfaces, typically using APIs. This approach to software development has become increasingly popular in recent years because it offers several key benefits over traditional, monolithic architecture.&#xA;Advantages One of the main advantages of microservices is that they are modular and highly scalable. Because each microservice is a separate and independent component, it can be developed, tested, and deployed independently of the other services.</description>
     </item>
   </channel>
 </rss>

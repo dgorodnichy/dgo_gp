@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Anonymous block argument in Ruby | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="In the Ruby programming language, it is possible to use default block parameters instead of...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/anonymous-block-argument-in-ruby/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/anonymous-block-argument-in-ruby/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Anonymous block argument in Ruby">
+  <meta property="og:description" content="In the Ruby programming language, it is possible to use default block parameters instead of...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Tutorial">
+
+  <meta itemprop="name" content="Anonymous block argument in Ruby">
+  <meta itemprop="description" content="In the Ruby programming language, it is possible to use default block parameters instead of...">
+  <meta itemprop="wordCount" content="219">
+  <meta itemprop="keywords" content="Ruby,Tutorial"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Anonymous block argument in Ruby">
+<meta name="twitter:description" content="In the Ruby programming language, it is possible to use default block parameters instead of...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          Anonymous block argument in Ruby
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p>In the Ruby programming language, it is possible to use default block parameters instead of variables. This feature allows for more concise and expressive code.</p>
+<h2 id="before-ruby-27">Before Ruby 2.7</h2>
+<p>We would need to write code like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">005</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span>map { <span style="color:#f92672">|</span>el<span style="color:#f92672">|</span> el }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><h2 id="from-ruby-27">From Ruby 2.7</h2>
+<p>However, in Ruby 2.7, numbered parameters were introduced, which allows us to write code like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">010</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">1000</span><span style="color:#f92672">].</span>each_with_index { p <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>_1<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">#{</span>_2<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> }
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;10, 0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;100, 1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;1000, 2&#34;</span>
+</span></span></code></pre></div><p>In the above example, <code>_1</code> refers to the first element of the array, and <code>_2</code> refers to its index.</p>
+<h2 id="from-ruby-34">From Ruby 3.4</h2>
+<p>In the newer version of Ruby 3.4, anonymous block arguments were added, and now we can refer to the first element using the word it. For example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">012</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span>each { it }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>In this case, it refers to the current element being iterated over.</p>
+<p>These features provide more flexibility and readability when working with blocks in Ruby. They allow for more concise code and reduce the need for explicit variable declarations.</p>
+<hr>
+<p><strong>Paul Keen</strong> is an Open Source Contributor and a Chief Technology Officer at <a href="https://showca.se">Showcase</a> and <a href="https://www.jetthoughts.com">JetThoughts</a>. Follow him on <a href="https://www.linkedin.com/in/paul-keen/">LinkedIn</a> or <a href="https://github.com/pftg">GitHub</a>.</p>
+<p>If you enjoyed this story, we recommend reading our <a href="https://jtway.co/latest">latest tech stories</a> and <a href="https://jtway.co/trending">trending tech stories</a>.</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

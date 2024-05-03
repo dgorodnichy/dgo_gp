@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Stimulus Keyboard Event Filter | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="What it was In the last update of Stimulus v3.2.2, the ability to filter the event by PageDown and...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/stimulus-keyboard-event-filter/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/stimulus-keyboard-event-filter/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Stimulus Keyboard Event Filter">
+  <meta property="og:description" content="What it was In the last update of Stimulus v3.2.2, the ability to filter the event by PageDown and...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+
+  <meta itemprop="name" content="Stimulus Keyboard Event Filter">
+  <meta itemprop="description" content="What it was In the last update of Stimulus v3.2.2, the ability to filter the event by PageDown and...">
+  <meta itemprop="wordCount" content="211"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Stimulus Keyboard Event Filter">
+<meta name="twitter:description" content="What it was In the last update of Stimulus v3.2.2, the ability to filter the event by PageDown and...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          Stimulus Keyboard Event Filter
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p><strong>What it was</strong>
+In the last update of Stimulus <code>v3.2.2</code>, the ability to filter the event by <code>PageDown</code> and <code>PageUp</code> keys was added.</p>
+<p>Before that, in <code>v3.2.1</code>, it looked like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">data-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;keyup-&gt;myController#myfunction&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p>and some like this&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Controller</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;stimulus&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Controller</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">connect</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Add a keydown event listener when the controller is connected to the DOM
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;keydown&#34;</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleKeyDown</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">disconnect</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Remove the keydown event listener when the controller is disconnected
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    document.<span style="color:#a6e22e">removeEventListener</span>(<span style="color:#e6db74">&#34;keydown&#34;</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleKeyDown</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleKeyDown</span>(<span style="color:#a6e22e">event</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Access the pressed key from the event
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">pressedKey</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">key</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Do something with the pressed key
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Pressed key: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">pressedKey</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>What the new</strong>
+For now, you can call <code>page_up</code>/<code>page_down</code> in action, like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">data-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;keydown.page_up-&gt;myController#myfunction&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p>It appears that the update introduces a more declarative syntax for handling key events in Stimulus. Instead of manually adding and removing event listeners in the controller, you can now specify the key and event type directly in the HTML using the data-action attribute.</p>
+<p>For example, in the updated version, the element is set to trigger the myfunction method in myController specifically on a keydown event for the Page Up key. This makes the code cleaner and more readable, emphasizing the intent directly in the HTML markup.</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

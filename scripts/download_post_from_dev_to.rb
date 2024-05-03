@@ -30,7 +30,7 @@ class SaveArticleToMarkdown
   end
 
   def save_to_md_file(data)
-    File.open("../posts/#{slug(data)}.md", 'w') { |file| file.write(data['body_markdown']) }
+    File.open("../content/#{slug(data)}.md", 'w') { |file| file.write(data['body_markdown']) }
     puts "File #{slug(data)}.md successfully created."
   end
 
@@ -55,15 +55,15 @@ class SaveArticleToMarkdown
   end
 
   def fill_seo_attributes(data)
-    markdown = File.read("../posts/#{slug(data)}.md")
+    markdown = File.read("../content/#{slug(data)}.md")
 
-    File.open("../posts/#{slug(data)}.md", 'w') do |file|
+    File.open("../content/#{slug(data)}.md", 'w') do |file|
       file.write("+++\n")
-      file.write("title = '#{data['title']}'\n")
-      file.write("description = '#{data['description']}'\n")
-      file.write("created_at = '#{data['created_at']}'\n")
-      file.write("edited_at = '#{data['edited_at']}'\n")
-      file.write("sync_date = '#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")}'\n")
+      file.write("title = \"#{data['title']}\"\n")
+      file.write("description = \"#{data['description']}\"\n")
+      file.write("created_at = \"#{data['created_at']}\"\n")
+      file.write("edited_at = \"#{data['edited_at']}\"\n")
+      file.write("sync_date = \"#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")}\"\n")
       file.write("draft = false\n")
       file.write("tags = #{data['tags']}\n")
       file.write("+++\n")

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Integrating Bun with Vite Ruby for Lightning-Fast Frontend Builds | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="With the recent release of Bun and its newfound support for Vite, coupled with Ruby on Rails 7.1...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/integrating-bun-with-vite-ruby-for-lightning-fast-frontend-builds/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/integrating-bun-with-vite-ruby-for-lightning-fast-frontend-builds/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Integrating Bun with Vite Ruby for Lightning-Fast Frontend Builds">
+  <meta property="og:description" content="With the recent release of Bun and its newfound support for Vite, coupled with Ruby on Rails 7.1...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Rails">
+    <meta property="article:tag" content="Javascript">
+    <meta property="article:tag" content="Tutorial">
+    <meta property="article:tag" content="Productivity">
+
+  <meta itemprop="name" content="Integrating Bun with Vite Ruby for Lightning-Fast Frontend Builds">
+  <meta itemprop="description" content="With the recent release of Bun and its newfound support for Vite, coupled with Ruby on Rails 7.1...">
+  <meta itemprop="wordCount" content="236">
+  <meta itemprop="keywords" content="Rails,Javascript,Tutorial,Productivity"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Integrating Bun with Vite Ruby for Lightning-Fast Frontend Builds">
+<meta name="twitter:description" content="With the recent release of Bun and its newfound support for Vite, coupled with Ruby on Rails 7.1...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          Integrating Bun with Vite Ruby for Lightning-Fast Frontend Builds
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p>With the recent release of <a href="https://bun.sh/">Bun</a> and its newfound support for Vite, coupled with <em>Ruby on Rails 7.1</em> incorporating native support for Bun, developers can now enhance their web development workflow significantly. Here is the effortless process of enabling <em>Bun</em> for <a href="https://vite-ruby.netlify.app/">Vite Ruby</a>, ultimately streamlining your front-end builds.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/hhd73ikhzma10k727lzf.png" alt="Bun plus Vite Ruby"></p>
+<h2 id="getting-started-creating-a-shim-bin">Getting Started: Creating a Shim Bin</h2>
+<p>To kick things off, you need to create a shim bin. Navigate to the <code>bin/shims</code> directory and add a file named <code>vite</code> with the following content:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>set -eo pipefail
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bunx vite <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><h2 id="configuring-vite-ruby-to-use-the-shim-bin">Configuring Vite Ruby to Use the Shim Bin</h2>
+<p>Next up, update your Vite Ruby configuration file (<code>config/vite.json</code>). Specify the path to the newly created shim bin using the <code>viteBinPath</code> attribute.</p>
+<p>Here&rsquo;s an example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;all&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;viteBinPath&#34;</span>: <span style="color:#e6db74">&#34;bin/shims/vite&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>By setting the <code>viteBinPath</code> to your shim bin, you&rsquo;re instructing <em>Vite Ruby</em> to leverage <em>Bun</em> during the build process.</p>
+<h2 id="the-results-a-faster-workflow">The Results: A Faster Workflow</h2>
+<p>The impact of this integration is tangible. Migrating to Bun has slashed asset processing time <strong>by 1-2 minutes</strong>, from installing dependencies to compiling assets. This optimization is particularly crucial for teams practicing <em>Continuous Delivery</em>, where quicker builds can significantly boost overall productivity.</p>
+<hr>
+<p><strong>Paul Keen</strong> is an Open Source Contributor and a Chief Technology Officer at <a href="https://showca.se">Showcase</a> and <a href="https://www.jetthoughts.com">JetThoughts</a>. Follow him on <a href="https://www.linkedin.com/in/paul-keen/">LinkedIn</a> or <a href="https://github.com/pftg">GitHub</a>.</p>
+<p>If you enjoyed this story, we recommend reading our <a href="https://jtway.co/latest">latest tech stories</a> and <a href="https://jtway.co/trending">trending tech stories</a>.</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

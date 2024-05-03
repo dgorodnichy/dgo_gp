@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "main.css",
-	"sourceRoot": "/Users/dgordnichy/projects/quickstart",
+	"sourceRoot": "/Users/dgordnichy/projects/dgo_gp",
 	"sources": [
 		"ananke/css/main.css"
 	],

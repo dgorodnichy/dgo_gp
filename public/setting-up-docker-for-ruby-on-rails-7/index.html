@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Setting Up Docker for Ruby on Rails 7 | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Introduction:   Docker is essential for modern software development, ensuring a consistent...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/setting-up-docker-for-ruby-on-rails-7/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/setting-up-docker-for-ruby-on-rails-7/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Setting Up Docker for Ruby on Rails 7">
+  <meta property="og:description" content="Introduction:   Docker is essential for modern software development, ensuring a consistent...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Beginners">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Docker">
+    <meta property="article:tag" content="Postgres">
+
+  <meta itemprop="name" content="Setting Up Docker for Ruby on Rails 7">
+  <meta itemprop="description" content="Introduction:   Docker is essential for modern software development, ensuring a consistent...">
+  <meta itemprop="wordCount" content="841">
+  <meta itemprop="keywords" content="Beginners,Ruby,Docker,Postgres"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Setting Up Docker for Ruby on Rails 7">
+<meta name="twitter:description" content="Introduction:   Docker is essential for modern software development, ensuring a consistent...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          Setting Up Docker for Ruby on Rails 7
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <h2 id="introduction">Introduction:</h2>
+<p>Docker is essential for modern software development, ensuring a consistent environment and simplifying setup. This article guides you through configuring Docker for Ruby on Rails 7, enhancing workflow efficiency and collaboration.
+ </p>
+<h2 id="prerequisites">Prerequisites:</h2>
+<p>Before diving into Dockerizing your Ruby on Rails 7 application, ensure you have Docker installed on your system. Below are instructions for installing Docker:</p>
+<ul>
+<li><a href="https://docs.docker.com/desktop/install/mac-install/">for Mac</a></li>
+<li><a href="https://docs.docker.com/desktop/install/windows-install/">for Windows</a></li>
+<li><a href="https://docs.docker.com/desktop/install/linux-install/">for Linux</a></li>
+</ul>
+<p>For example to install Docker on Ubuntu, run the following commands in the terminal:</p>
+<pre tabindex="0"><code>sudo apt-get update
+sudo apt-get install docker.io
+</code></pre><p>Make sure Docker is running and start it with:</p>
+<pre tabindex="0"><code>sudo service docker start
+</code></pre><p>Download the prepared repository:</p>
+<pre tabindex="0"><code>git clone https://github.com/Qj7/rails_7_with_docker
+</code></pre><p> </p>
+<h2 id="setting-up-dockerfile">Setting Up Dockerfile:</h2>
+<p>The <code>Dockerfile</code> serves as the blueprint for building the Docker image for our Rails application.
+It&rsquo;s essential to use only trusted or official base images to ensure the reliability and security of your Docker environment.</p>
+<p>Avoid:</p>
+<pre tabindex="0"><code>FROM random-source-from-internet/ruby:3.1.4
+</code></pre><p>Instead, opt for:</p>
+<pre tabindex="0"><code>FROM ruby:3.1.4
+</code></pre><p>Alternatively, if you have your own image registry:
+<a href="https://www.docker.com/blog/how-to-use-your-own-registry-2/">How to use own registry</a></p>
+<pre tabindex="0"><code># Assuming that is your own image registry, which you control entirely
+FROM your-own-registry.com/ruby:3.1.4
+</code></pre><p>While our current configuration utilizes Ruby version 3.1.4, you have the flexibility to select any Ruby version of your preference. Simply update the version in both the <code>Gemfile</code> and <code>Dockerfile</code>. Below is an example template:</p>
+<pre tabindex="0"><code># Use the official Ruby image as the base image
+FROM ruby:3.1.4
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update &amp;&amp; \
+    apt-get install -y nodejs &amp;&amp; \
+    gem install bundler
+
+# Copy Gemfile and Gemfile.lock to the working directory
+COPY Gemfile Gemfile.lock ./
+
+# Install gems
+RUN bundle install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose port 3000 to the outside world
+EXPOSE 3000
+
+# Start the Rails server
+CMD [&#34;rails&#34;, &#34;server&#34;, &#34;-b&#34;, &#34;0.0.0.0&#34;]
+</code></pre><p> </p>
+<h2 id="multi-stage-setup-for-dockerfile">Multi-stage setup for <code>Dockerfile</code></h2>
+<p>Utilizing multi-stage builds in Docker can greatly enhance your Docker workflow. Multi-stage builds allow you to segment your Dockerfile into distinct stages, each serving a specific purpose.</p>
+<p>In the first stage, you can focus on building and compiling your application. This stage typically includes installing dependencies, compiling source code, and generating any necessary artifacts.</p>
+<pre tabindex="0"><code># Stage 1: Build stage
+FROM ruby:3.1.4 AS builder
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update &amp;&amp; \
+    apt-get install -y nodejs
+
+# Copy Gemfile and Gemfile.lock to the working directory
+COPY Gemfile Gemfile.lock ./
+
+# Install gems
+RUN gem install bundler &amp;&amp; bundle install
+
+# Copy the rest of the application code
+COPY . .
+
+# Stage 2: Final stage
+FROM ruby:3.1.4
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy built application from the builder stage
+COPY --from=builder /app .
+
+# Expose port 3000 to the outside world
+EXPOSE 3000
+
+# Start the Rails server
+CMD [&#34;rails&#34;, &#34;server&#34;, &#34;-b&#34;, &#34;0.0.0.0&#34;]
+</code></pre><p>In our case, implementing multi-stage builds reduced the size of our image from 1.24GB to 998MB, demonstrating the significant reduction in image size achieved through this approach.</p>
+<p> </p>
+<h2 id="multi-container-setup">Multi-container Setup:</h2>
+<p>While the <code>Dockerfile</code> allows us to create a container for our application, sometimes a single container is not sufficient for full application functionality. Often, you also need a database or other services, such as a cache storage. For demonstration purposes, we&rsquo;ll set up PostgreSQL as an example. Other popular choices could be <code>Redis</code>, <code>Sidekiq</code>, or any other service required for your application.
+ </p>
+<h2 id="creating-docker-compose-configuration">Creating Docker Compose Configuration:</h2>
+<p>Docker Compose simplifies the management of multi-container Docker applications. Below is a Docker Compose configuration file <code>docker-compose.yml</code> for our Rails and PostgreSQL application:</p>
+<pre tabindex="0"><code>version: &#39;3.8&#39;
+
+services:
+  # Service for the Ruby on Rails web application
+  web:
+    build: .  # Build the service&#39;s image from the current directory
+    command: bundle exec rails s -p 3000 -b &#39;0.0.0.0&#39;  # Command to start the Rails server
+    ports:
+      - &#34;3000:3000&#34;  # Expose ports for accessing the application
+    volumes:
+      - .:/app  # Mount the current directory inside the container
+    depends_on:
+      - db  # Specify dependency on the database service
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/rails_7_with_docker  # Database connection parameters
+
+  # Service for the PostgreSQL database
+  db:
+    image: postgres:13  # Use the official PostgreSQL version 13 image
+    ports:
+      - &#34;5432:5432&#34;  # Expose port for accessing the database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Create a volume for storing database data
+    environment:
+      POSTGRES_USER: postgres  # Set the username for database access
+      POSTGRES_PASSWORD: postgres  # Set the password for database access
+
+# Define a volume for storing PostgreSQL data
+volumes:
+  postgres_data:
+</code></pre><p> </p>
+<h2 id="running-docker-containers">Running Docker Containers:</h2>
+<p>With the Dockerfile and Docker Compose configuration in place, we can build and run our Docker containers. Execute the following commands in your terminal:</p>
+<pre tabindex="0"><code>docker-compose build
+docker-compose run web rails db:create
+docker-compose up
+</code></pre><p> </p>
+<h2 id="accessing-the-rails-application">Accessing the Rails Application:</h2>
+<p>Once the containers are up and running, open a web browser and navigate to http://localhost:3000 to access your Rails application.
+ </p>
+<h2 id="conclusion">Conclusion:</h2>
+<p>We&rsquo;ve explored how Docker transforms Ruby on Rails 7 development workflows. By containerizing our Rails application, we ensure consistency, simplify collaboration, and enhance productivity. Embrace Docker in your development journey to streamline your Ruby on Rails projects. Happy coding!</p>
+<p><a href="https://www.linkedin.com/in/vladimir-dolgiy/">Add my at LinkedIn ❤️</a></p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

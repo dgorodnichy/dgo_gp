@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=52450&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>How to create triangles in TailwindCSS | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="In this post, we are going to see four examples to draw a triangle in TailwindCSS using borders.    ...">
+    <meta name="generator" content="Hugo 0.125.4">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:52450/how-to-create-triangles-in-tailwindcss/">
+    
+
+    <meta property="og:url" content="http://localhost:52450/how-to-create-triangles-in-tailwindcss/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="How to create triangles in TailwindCSS">
+  <meta property="og:description" content="In this post, we are going to see four examples to draw a triangle in TailwindCSS using borders.    ...">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:tag" content="Html">
+    <meta property="article:tag" content="Css">
+    <meta property="article:tag" content="Webdev">
+    <meta property="article:tag" content="Tailwindcss">
+
+  <meta itemprop="name" content="How to create triangles in TailwindCSS">
+  <meta itemprop="description" content="In this post, we are going to see four examples to draw a triangle in TailwindCSS using borders.    ...">
+  <meta itemprop="wordCount" content="161">
+  <meta itemprop="keywords" content="Html,Css,Webdev,Tailwindcss"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="How to create triangles in TailwindCSS">
+<meta name="twitter:description" content="In this post, we are going to see four examples to draw a triangle in TailwindCSS using borders.    ...">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <h1 class="f1">
+          How to create triangles in TailwindCSS
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links mid-gray">
+        <p>In this post, we are going to see four examples to draw a triangle in TailwindCSS using borders.</p>
+<h2 id="triangle-down">Triangle Down</h2>
+<p>Triangle is one of the simplest shapes in geometry. It can be drawn with just three straight lines and a couple of angles.</p>
+<ol>
+<li>Set a width and height of 0 by: <code>w-0</code> and <code>h-0</code></li>
+<li>Set the top border to have the full height and color by: <code>border-t-[75px] border-t-red-500</code></li>
+<li>Set the side borders to half the width with the color transparent by: <code>border-l-[50px] border-l-transparent</code> and <code>border-r-[50px] border-r-transparent</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;w-0 h-0 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-l-[50px] border-l-transparent
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-t-[75px] border-t-red-500
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-r-[50px] border-r-transparent&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lty9myydv862xrzdplm8.png" alt="Image description"></p>
+<h2 id="triangle-left">Triangle Left</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;w-0 h-0 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-t-[50px] border-t-transparent
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-r-[75px] border-r-blue-500
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-b-[50px] border-b-transparent&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5wkf825qmrkth0swawxe.png" alt="Image description"></p>
+<h2 id="triangle-up">Triangle Up</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;w-0 h-0 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-l-[50px] border-l-transparent
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-b-[75px] border-b-yellow-500
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-r-[50px] border-r-transparent&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/hvchko8w2mi3nnvx9l4r.png" alt="Image description"></p>
+<h2 id="triangle-right">Triangle Right</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;w-0 h-0 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-t-[50px] border-t-transparent
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-l-[75px] border-l-green-500
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  border-b-[50px] border-b-transparent&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9x7x2twgrj9a2hsqjh9k.png" alt="Image description"></p>
+<p>In this post, we showed examples of a simple equilateral triangle. If you need a triangle with different sides, you can play with the width of the border <code>[*px]</code>.</p>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:52450/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>
